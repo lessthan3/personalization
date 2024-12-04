@@ -9,7 +9,8 @@
     "url": "https://github.com/lessthan3/personalization.git"
   },
   "engines": {
-    "node": "20.x.x"
+    "node": "20.x.x",
+    "yarn": ">=1.22.22"
   },
   "main": "./dist/main.js",
   "scripts": {
@@ -27,7 +28,7 @@
     "@google-cloud/firestore": "^7.10.0",
     "axios": "^1.7.5",
     "body-parser": "^1.20.2",
-    "compression": "^1.7.4",
+    "compression": "^1.7.5",
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "gaxios": "^6.7.0",
@@ -40,7 +41,7 @@
   "devDependencies": {
     "@types/compression": "^1.7.5",
     "@types/cors": "^2.8.12",
-    "@types/express": "^4.17.13",
+    "@types/express": "^4.17.17",
     "@types/jest": "^29.5.12",
     "@types/morgan": "^1.9.3",
     "@types/node": "^16.11.21",
@@ -55,5 +56,8 @@
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
+  },
+  "resolutions": {
+    "@types/express": "^4.17.17"
   }
 }

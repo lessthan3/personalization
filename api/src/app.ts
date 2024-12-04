@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import express, { Application } from "express";
+import express, { type Application } from "express";
 import helmet from "helmet";
 import compression from "compression";
 import morgan from "morgan";
 import bodyParser from "body-parser";
-import cors, { CorsOptions } from "cors";
+import cors, { type CorsOptions } from "cors";
 import { mainRouter } from "./routers/main.router";
 import { errorHandler } from "./middleware/error.middleware";
 import { headerHandler } from "./middleware/header.middleware";
