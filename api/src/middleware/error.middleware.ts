@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import axios, { AxiosError } from "axios";
-import { ProjectError } from '../models/interfaces/error.interface';
-import { writeError } from '../helpers/logs.helper';
+import { ProjectError } from "../models/interfaces/error.interface";
+import { writeError } from "../helpers/logs.helper";
 
 export function errorHandler(
   error: Error | AxiosError | ProjectError | any,
@@ -11,10 +11,10 @@ export function errorHandler(
 ) {
   let code: number = 500;
 
-  let response = {
+  const response = {
     error: {
       message: "Unknown Error"
-    }    
+    }
   };
 
   if (axios.isAxiosError(error)) {
@@ -24,7 +24,7 @@ export function errorHandler(
       code = Number(error?.response?.status) || 500;
       response.error.message = (error?.response?.data as any)?.detail || error.message;
     }
-  } else if (error instanceof ProjectError) { 
+  } else if (error instanceof ProjectError) {
     code = error?.code || 500;
     response.error.message = error.message;
   } else if (error instanceof Error) {
@@ -38,8 +38,8 @@ export function errorHandler(
       requestMethod: req.method,
       requestUrl: req.originalUrl,
       remoteIp: req.ip,
-      userAgent: req.get('User-Agent'),
-    }  
+      userAgent: req.get("User-Agent")
+    }
   });
 
   return res.status(code).json(response);

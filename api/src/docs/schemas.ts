@@ -18,7 +18,7 @@
  *     UnauthorizedError:
  *       type: string
  *       description: Error message indicating authentication header is missing
- *       example: "Unauthorized"    
+ *       example: "Unauthorized"
  *     GeneralErrorResponseError:
  *       type: object
  *       properties:
@@ -28,5 +28,5 @@
  *             message:
  *               type: string
  *               description: Error message indicating that something was wrong with the request
- *               example: "Something was wrong"         
+ *               example: "Something was wrong"
  */

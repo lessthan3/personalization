@@ -61,7 +61,7 @@ app
     })
   )
   .use(headerHandler)
-  .use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
+  .use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs))
   .use("/api/v1", mainRouter)
   .use(errorHandler)
   .disable("x-powered-by");

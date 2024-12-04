@@ -6,8 +6,6 @@ import { authHandler } from "../middleware/auth.middleware";
 // https://www.restapitutorial.com/lessons/restfulresourcenaming.html
 // https://www.restapitutorial.com/lessons/httpmethods.html
 
-const router: Router = express
-  .Router()
-  .use(authHandler)
-  
+const router: Router = express.Router().use(authHandler);
+
 export { router as mainRouter };
