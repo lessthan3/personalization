@@ -12,27 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import express, { type Application } from "express";
+import express, { type Application, type Request, type Response, type NextFunction } from "express";
 import helmet from "helmet";
 import compression from "compression";
 import morgan from "morgan";
-import bodyParser from "body-parser";
 import cors, { type CorsOptions } from "cors";
+import { json, text, urlencoded } from "body-parser";
+
 import { mainRouter } from "./routers/main.router";
 import { errorHandler } from "./middleware/error.middleware";
 import { headerHandler } from "./middleware/header.middleware";
 import { swaggerDocs, swaggerUi } from "./docs/swagger";
 
-//express
+// Create express instance
 const app: Application = express();
 
+// Configure CORS for local development
 if (process.env.ENVIRONMENT === "LOCAL") {
-  // cors => disable in production
-  const whitelist = ["http://localhost:3000", "http://localhost:3000/#/", "http://localhost:8080"];
+  const whitelist: string[] = ["http://localhost:3000", "http://localhost:8080"];
   const corsOptions: CorsOptions = {
-    origin: (origin: any, callback: any) => {
-      if (whitelist.indexOf(origin) !== -1) callback(null, true);
-      else callback(new Error("Not allowed by CORS"));
+    origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
+      if (!origin || whitelist.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
     },
     credentials: true
   };
@@ -40,30 +44,27 @@ if (process.env.ENVIRONMENT === "LOCAL") {
   app.use(morgan("dev"));
 }
 
+// Middleware configuration
 app
-  .use(bodyParser.json())
   .use(compression())
   .use(helmet())
-  .use(
-    express.json({
-      limit: "5mb"
-    })
-  )
-  .use(
-    express.text({
-      limit: "5mb"
-    })
-  )
-  .use(
-    express.urlencoded({
-      extended: true,
-      limit: "5mb"
-    })
-  )
-  .use(headerHandler)
-  .use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs))
-  .use("/api/v1", mainRouter)
-  .use(errorHandler)
-  .disable("x-powered-by");
+  .use(json({ limit: "5mb" }))
+  .use(text({ limit: "5mb" }))
+  .use(urlencoded({ extended: true, limit: "5mb" }))
+  .use(headerHandler);
+
+// API documentation route
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+// Main API routes
+app.use("/api/v1", mainRouter);
+
+// Error handling middleware
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  errorHandler(err, req, res, next);
+});
+
+// Disable x-powered-by header for added security
+app.disable("x-powered-by");
 
 export { app };

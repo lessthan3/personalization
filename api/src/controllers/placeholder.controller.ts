@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import type { Request, Response, NextFunction } from "express";
 import { buildHTTPRequest, writeInfo } from "../helpers/logs.helper";
 
 async function doSomething(req: Request, res: Response, next: NextFunction) {

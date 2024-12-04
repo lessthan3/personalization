@@ -1,5 +1,5 @@
-import { Request, Response, NextFunction } from "express";
-import axios, { AxiosError } from "axios";
+import type { Request, Response, NextFunction } from "express";
+import axios, { type AxiosError } from "axios";
 import { ProjectError } from "../models/interfaces/error.interface";
 import { writeError } from "../helpers/logs.helper";
 
@@ -9,7 +9,7 @@ export function errorHandler(
   res: Response,
   next: NextFunction
 ) {
-  let code: number = 500;
+  let code = 500;
 
   const response = {
     error: {

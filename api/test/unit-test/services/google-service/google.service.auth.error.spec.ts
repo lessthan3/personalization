@@ -9,11 +9,9 @@ jest.mock("googleapis", () => {
       ...actualGoogle,
       options: jest.fn(),
       auth: {
-        GoogleAuth: jest.fn().mockImplementation(function () {
-          return {
-            getProjectId: jest.fn().mockRejectedValue("Error message")
-          };
-        })
+        GoogleAuth: jest.fn().mockImplementation(() => ({
+          getProjectId: jest.fn().mockRejectedValue("Error message")
+        }))
       },
       cloudresourcemanager: jest.fn(() => {
         return {

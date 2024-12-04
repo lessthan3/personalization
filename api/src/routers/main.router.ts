@@ -1,4 +1,4 @@
-import express, { Router } from "express";
+import express, { type Router } from "express";
 import { authHandler } from "../middleware/auth.middleware";
 
 // For reference(REST API Guide):

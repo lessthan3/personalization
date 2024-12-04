@@ -23,4 +23,4 @@ interface HTTPRequestObject {
   userAgent: string;
 }
 
-export { LoggerData, HTTPRequestObject };
+export type { LoggerData, HTTPRequestObject };

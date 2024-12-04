@@ -1,5 +1,5 @@
 import { LOGGER_SEVERITY_LEVELS } from "../constants/logger.constant";
-import { HTTPRequestObject, LoggerData } from "../models/interfaces/logger.interface";
+import type { HTTPRequestObject, LoggerData } from "../models/interfaces/logger.interface";
 
 /**
  * Get function name from error stack
@@ -7,7 +7,7 @@ import { HTTPRequestObject, LoggerData } from "../models/interfaces/logger.inter
  * @returns
  */
 function getFunctionName(error: string) {
-  let functionName: string = "";
+  let functionName = "";
 
   try {
     const splitStack = error

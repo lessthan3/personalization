@@ -5,4 +5,4 @@ type GeneralResponse = {
 
 type ReadonlyGeneralResponse = Readonly<GeneralResponse>;
 
-export { ReadonlyGeneralResponse };
+export type { ReadonlyGeneralResponse };
