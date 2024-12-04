@@ -1,0 +1,11 @@
+const SITE_COLLECTION = 'site';
+const RULE_COLLECTION = 'rule';
+const MAX_RETRY_ATTEMPTS = 3;
+const RULES_FIRESTORE_DB_ID = 'rules';
+
+export {
+    SITE_COLLECTION,
+    RULE_COLLECTION,
+    MAX_RETRY_ATTEMPTS,
+    RULES_FIRESTORE_DB_ID,
+}
