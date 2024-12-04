@@ -1,11 +1,5 @@
 name: 'Terraform Pipeline'
 
-env:
-  WORKLOAD_ID_PROVIDER: ${{ secrets.WORKLOAD_ID_PROVIDER }}
-  SERVICE_ACCOUNT: ${{ secrets.SERVICE_ACCOUNT }}
-  PROJECT_ID: ${{ secrets.PROJECT_ID }}
-  BUCKET: ${{ secrets.BUCKET }}
-
 on:
   push:
     branches: [ "main","development" ]
@@ -48,16 +42,16 @@ jobs:
       name: 'Authenticate to Google Cloud'
       uses: 'google-github-actions/auth@v2'
       with:
-        workload_identity_provider: ${{ env.WORKLOAD_ID_PROVIDER }}
-        service_account: ${{ env.SERVICE_ACCOUNT }}
+        workload_identity_provider: ${{ secrets.WORKLOAD_ID_PROVIDER }}
+        service_account: ${{ secrets.SERVICE_ACCOUNT }}
 
     - name: Terraform variables
       id: tfvars
       working-directory: infra/
       run: |-
         cat > pipeline.auto.tfvars <<EOF
-        project_id = "${{ env.PROJECT_ID }}"
-        tf_bucket = "${{ env.BUCKET }}"
+        project_id = "${{ secrets.PROJECT_ID }}"
+        tf_bucket = "${{ secrets.BUCKET }}"
         EOF
 
     - name: Terraform Init
