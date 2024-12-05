@@ -3,18 +3,17 @@
 resource "google_project_service" "project_services" {
   project = var.project_id
   for_each = toset([
-    #    "artifactregistry.googleapis.com",
+    "aiplatform.googleapis.com",
+    "artifactregistry.googleapis.com",
     "bigquery.googleapis.com",
-    #    "compute.googleapis.com",
-    #    "container.googleapis.com",
-    #    "containerscanning.googleapis.com",
+    "compute.googleapis.com",
     "dataflow.googleapis.com",
-    #    "dataproc.googleapis.com",
     "firestore.googleapis.com",
     "logging.googleapis.com",
     "monitoring.googleapis.com",
-    #    "networkservices.googleapis.com",
-    #    "run.googleapis.com",
+    "notebooks.googleapis.com",
+    "datacatalog.googleapis.com",
+    "visionai.googleapis.com",
   ])
   service                    = each.key
   disable_dependent_services = false
