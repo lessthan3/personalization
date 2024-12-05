@@ -7,6 +7,7 @@ resource "google_project_service" "project_services" {
     "artifactregistry.googleapis.com",
     "bigquery.googleapis.com",
     "compute.googleapis.com",
+    "containeranalysis.googleapis.com",
     "dataflow.googleapis.com",
     "firestore.googleapis.com",
     "logging.googleapis.com",
