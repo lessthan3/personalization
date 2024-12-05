@@ -7,7 +7,7 @@ interface HTTPRequestInfo {
 }
 
 interface LoggerData {
-  logName?: string; 
+  logName?: string;
   userInformation?: Record<string, any>;
   message: string;
   fncName?: string;
@@ -18,11 +18,9 @@ interface LoggerData {
 interface HTTPRequestObject {
   requestMethod: string;
   requestUrl: string;
-  requestBody?: any
+  requestBody?: any;
   remoteIp: any;
   userAgent: string;
 }
 
-export {
-  LoggerData, HTTPRequestObject
-}
+export type { LoggerData, HTTPRequestObject };

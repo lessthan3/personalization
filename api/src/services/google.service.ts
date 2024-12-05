@@ -3,9 +3,7 @@ import { Firestore } from "@google-cloud/firestore";
 import { RULES_FIRESTORE_DB_ID } from "../constants/database.constant";
 
 export const auth = new google.auth.GoogleAuth({
-  scopes: [
-    "https://www.googleapis.com/auth/cloud-platform"
-  ]
+  scopes: ["https://www.googleapis.com/auth/cloud-platform"]
 });
 
 google.options({ auth });
@@ -24,13 +22,8 @@ async function getCurrentProjectNumber() {
   const currentProjectNumber = cloudResourceManager.projects.get({
     projectId: currentProjectId
   });
-  
+
   return (await currentProjectNumber).data.projectNumber;
 }
 
-export {
-  cloudResourceManager,
-  getCurrentProjectId,
-  getCurrentProjectNumber,
-  firestore
-};
+export { cloudResourceManager, getCurrentProjectId, getCurrentProjectNumber, firestore };

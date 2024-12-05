@@ -1,0 +1,89 @@
+name: 'API Pipeline'
+
+on:
+  push:
+    branches: [ "main","development" ]
+    paths:
+      - '.github/workflows/api-cicd.yaml'
+      - 'api/**'
+  pull_request:
+    branches: [ "main","development" ]
+    paths:
+      - '.github/workflows/api-cicd.yaml'
+      - 'api/**'
+
+jobs:
+  setup-build-publish-deploy:
+    name: Setup, Build, Publish, and Deploy
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+      issues: write
+      pull-requests: write
+
+    # Use the Bash shell regardless whether the GitHub Actions
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      # Checkout the repository to the GitHub Actions runner
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          workload_identity_provider: ${{ secrets.WORKLOAD_ID_PROVIDER }}
+          service_account: ${{ secrets.SERVICE_ACCOUNT }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          buildkitd-flags: --debug
+     
+      - name: Docker Login
+        working-directory: './api/'
+        run: |-
+          gcloud auth configure-docker gcr.io
+  
+      - name: 'Build findingSimilarities Container'
+        uses: docker/build-push-action@v6
+        with:
+          context: "{{defaultContext}}:api/"
+          push: false
+          cache-from: type=registry,ref=gcr.io/${{ env.GCP_PROJECT }}/api:buildcache
+          cache-to: type=registry,ref=gcr.io/${{ env.GCP_PROJECT }}/api:buildcache,mode=max
+          tags: |
+            gcr.io/${{ env.GCP_PROJECT }}/api:${{ github.sha }}
+    
+      - name: 'Push and tag Container'
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        uses: docker/build-push-action@v6
+        with:
+          context: "{{defaultContext}}:api/"
+          push: true
+          cache-from: type=registry,ref=gcr.io/${{ env.GCP_PROJECT }}/finding-similarities:buildcache
+          cache-to: type=registry,ref=gcr.io/${{ env.GCP_PROJECT }}/finding-similarities:buildcache,mode=max
+          tags: |
+            gcr.io/${{ env.GCP_PROJECT }}/finding-similarities:${{ github.sha }}
+            gcr.io/${{ env.GCP_PROJECT }}/finding-similarities:latest
+  
+      - name: Deploy
+        working-directory: './api/'
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |-
+          gcloud run deploy maestro-overlays-api \
+          --image "gcr.io/${GCP_PROJECT}/api:$GITHUB_SHA" \
+          --service-account "maestro-backend@maestro-intelligence.iam.gserviceaccount.com" \
+          --platform managed \
+          --allow-unauthenticated \
+          --timeout=3600s \
+          --cpu=2 \
+          --memory=1Gi \
+          --concurrency 1 \
+          --min-instances 1 \
+          --max-instances 100 \
+          --region us-central1 \
+          --ingress internal-and-cloud-load-balancing

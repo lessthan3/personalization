@@ -1,22 +1,22 @@
-import { Request, Response, NextFunction } from "express";
+import type { Request, Response, NextFunction } from "express";
 import { buildHTTPRequest, writeInfo } from "../helpers/logs.helper";
 
 async function doSomething(req: Request, res: Response, next: NextFunction) {
-  try {    
+  try {
     const { id } = req.body;
 
     writeInfo({
-      fncName: 'doSomething',
+      fncName: "doSomething",
       message: `Doing something with ${id}`,
       httpRequest: buildHTTPRequest(req, req.body)
     });
 
-    // const response = await serviceFunction(id);    
-    
+    // const response = await serviceFunction(id);
+
     // return res.status(response.code).json(response.result);
   } catch (error) {
     next(error);
   }
 }
 
-export { doSomething }
+export { doSomething };

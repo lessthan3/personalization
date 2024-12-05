@@ -1,4 +1,4 @@
-import express, { Router } from "express";
+import express, { type Router } from "express";
 import { authHandler } from "../middleware/auth.middleware";
 
 // For reference(REST API Guide):
@@ -6,8 +6,6 @@ import { authHandler } from "../middleware/auth.middleware";
 // https://www.restapitutorial.com/lessons/restfulresourcenaming.html
 // https://www.restapitutorial.com/lessons/httpmethods.html
 
-const router: Router = express
-  .Router()
-  .use(authHandler)
-  
+const router: Router = express.Router().use(authHandler);
+
 export { router as mainRouter };

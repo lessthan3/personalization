@@ -36,9 +36,9 @@
  *           schema:
  *             $ref: '#/components/schemas/UnauthorizedError'
  *     GeneralErrorResponse:
- *       description: Something was wrong in the request 
+ *       description: Something was wrong in the request
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/GeneralErrorResponseError' 
-*/
+ *             $ref: '#/components/schemas/GeneralErrorResponseError'
+ */
