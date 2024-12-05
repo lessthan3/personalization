@@ -51,6 +51,7 @@ variable "sa_users" {
     "user:amilcar.infante@globant.com",
     "user:manuel.aller@globant.com",
     "user:julioisrael.gonzalez@globant.com",
+    "user:miguel.murillo@globant.com",
   ])
 }
 
