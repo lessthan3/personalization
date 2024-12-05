@@ -101,7 +101,6 @@ resource "google_project_iam_member" "felipe_permissions" {
   member   = "user:felipe.bozzano@globant.com"
 }
 
-# https://globant-ext-young-hollywood.atlassian.net/browse/YOU008-120
 resource "google_project_iam_member" "felipe_redis" {
   project = var.project_id
   role    = "roles/redis.editor"
