@@ -1,3 +1,14 @@
+#Temporary access during development
+resource "google_project_iam_member" "manu_permissions" {
+  project = var.project_id
+  for_each = toset([
+    "roles/datastore.owner",
+    "roles/firebase.admin",
+    "roles/firebase.developAdmin",
+  ])
+  role   = each.key
+  member = "user:manuel.aller@globant.com"
+}
 
 #Temporary access during development
 resource "google_project_iam_member" "federico_permissions" {
@@ -69,7 +80,6 @@ variable "pipol_permissions" {
     "roles/compute.instanceAdmin",
     "roles/dataflow.admin",
     "roles/dataproc.admin",
-    "roles/datastore.owner",
     "roles/datastore.user",
     "roles/iam.serviceAccountTokenCreator",
     "roles/iam.serviceAccountUser",
