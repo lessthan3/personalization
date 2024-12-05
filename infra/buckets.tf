@@ -18,3 +18,12 @@ resource "google_storage_bucket" "maestro_backend_overlays" {
   uniform_bucket_level_access = true
   public_access_prevention    = "enforced"
 }
+
+resource "google_storage_bucket" "python_nb_bucket" {
+  project                     = var.project_id
+  name                        = "python_nb_bucket"
+  location                    = var.region
+  storage_class               = "STANDARD"
+  uniform_bucket_level_access = true
+  public_access_prevention    = "enforced"
+}
