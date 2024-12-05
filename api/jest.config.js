@@ -6,5 +6,5 @@ module.exports = {
   reporters: ["default", "jest-junit"],
   collectCoverageFrom: ["src/**/*.ts", "!**/node_modules/**"],
   coverageReporters: ["html", "text", "text-summary", "cobertura"],
-  testPathIgnorePatterns: ['/node_modules/', '/dist/']
+  testPathIgnorePatterns: ["/node_modules/", "/dist/"]
 };

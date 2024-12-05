@@ -2,9 +2,7 @@ import { SecretManagerServiceClient } from "@google-cloud/secret-manager";
 import * as googleService from "../../../../src/services/google.service";
 
 // Mock the external dependencies or functions
-jest.mock('@google-cloud/secret-manager', () => {
-
-});
+jest.mock("@google-cloud/secret-manager", () => {});
 
 jest.mock("googleapis", () => {
   const actualApi = jest.requireActual("googleapis");
@@ -59,5 +57,3 @@ describe("GoogleService", () => {
     });
   });
 });
-
-

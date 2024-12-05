@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 
 export function headerHandler(req: Request, res: Response, next: NextFunction) {
   res.header("Access-Control-Allow-Origin", req.headers.origin);
