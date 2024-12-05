@@ -64,11 +64,11 @@ jobs:
         with:
           context: "{{defaultContext}}:api/"
           push: true
-          cache-from: type=registry,ref=gcr.io/${{ env.GCP_PROJECT }}/finding-similarities:buildcache
-          cache-to: type=registry,ref=gcr.io/${{ env.GCP_PROJECT }}/finding-similarities:buildcache,mode=max
+          cache-from: type=registry,ref=gcr.io/${{ env.GCP_PROJECT }}/api:buildcache
+          cache-to: type=registry,ref=gcr.io/${{ env.GCP_PROJECT }}/api:buildcache,mode=max
           tags: |
-            gcr.io/${{ env.GCP_PROJECT }}/finding-similarities:${{ github.sha }}
-            gcr.io/${{ env.GCP_PROJECT }}/finding-similarities:latest
+            gcr.io/${{ env.GCP_PROJECT }}/api:${{ github.sha }}
+            gcr.io/${{ env.GCP_PROJECT }}/api:latest
   
       - name: Deploy
         working-directory: './api/'
