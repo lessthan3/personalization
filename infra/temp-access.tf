@@ -50,7 +50,8 @@ variable "sa_users" {
     "user:felipe.bozzano@globant.com",
     "user:amilcar.infante@globant.com",
     "user:manuel.aller@globant.com",
-    "user:mario.mauvecin@globant.com"
+    "user:mario.mauvecin@globant.com",
+    "user:julioisrael.gonzalez@globant.com",
   ])
 }
 
@@ -60,6 +61,11 @@ variable "pipol_permissions" {
   default = ([
     "roles/aiplatform.admin",
     "roles/aiplatform.user",
+    "roles/bigquery.connectionUser",
+    "roles/bigquery.dataViewer",
+    "roles/bigquery.jobUser",
+    "roles/bigquery.studioUser",
+    "roles/bigquery.user",
     "roles/compute.instanceAdmin",
     "roles/dataflow.admin",
     "roles/dataproc.admin",
@@ -70,26 +76,16 @@ variable "pipol_permissions" {
     "roles/iam.serviceAccountViewer",
     "roles/livestream.editor",
     "roles/logging.admin",
+    "roles/logging.logWriter",
     "roles/monitoring.editor",
     "roles/run.developer",
     "roles/run.invoker",
     "roles/run.sourceViewer",
     "roles/secretmanager.secretAccessor",
-    "roles/storage.admin",
-    "roles/transcoder.admin",
-    "roles/vpcaccess.user",
-    "roles/workflows.admin",
     "roles/serviceusage.serviceUsageConsumer",
-    "roles/editor",
-    "roles/bigquery.user",
-    "roles/bigquery.dataViewer",
-    "roles/bigquery.connectionUser",
-    "roles/bigquery.studioUser",
-    "roles/bigquery.jobUser",
-    "roles/logging.logWriter",
+    "roles/storage.admin",
     "roles/speech.client",
-    "roles/storage.objectUser",
-    "roles/workflows.invoker",
+    "roles/vpcaccess.user",
   ])
 }
 
