@@ -14,3 +14,8 @@ variable "tf_bucket" {
   type        = string
   description = "bucket to store the tfstate file"
 }
+
+variable "terraform_sa" {
+  type        = string
+  description = "name of the terraform/github SA"
+}

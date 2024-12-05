@@ -52,6 +52,7 @@ jobs:
         cat > pipeline.auto.tfvars <<EOF
         project_id = "${{ secrets.PROJECT_ID }}"
         tf_bucket = "${{ secrets.BUCKET }}"
+        terraform_sa = "${{ secrets.SERVICE_ACCOUNT }}"        
         EOF
 
     - name: Terraform Init
