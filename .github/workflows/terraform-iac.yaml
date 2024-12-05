@@ -1,0 +1,96 @@
+name: 'Terraform Pipeline'
+
+on:
+  push:
+    branches: [ "main","development" ]
+    paths:
+      - '.github/workflows/terraform-iac.yaml'
+      - 'infra/**'
+  pull_request:
+    branches: [ "main","development" ]
+    paths:
+      - '.github/workflows/terraform-iac.yaml'
+      - 'infra/**'
+
+jobs:
+  demo:
+    name: 'Terraform Pipeline'
+    runs-on: ubuntu-latest
+    environment: demo
+    permissions:
+      id-token: write
+      contents: read
+      issues: write
+      pull-requests: write
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_wrapper: false
+
+    - id: 'auth'
+      name: 'Authenticate to Google Cloud'
+      uses: 'google-github-actions/auth@v2'
+      with:
+        workload_identity_provider: ${{ secrets.WORKLOAD_ID_PROVIDER }}
+        service_account: ${{ secrets.SERVICE_ACCOUNT }}
+
+    - name: Terraform variables
+      id: tfvars
+      working-directory: infra/
+      run: |-
+        cat > pipeline.auto.tfvars <<EOF
+        project_id = "${{ secrets.PROJECT_ID }}"
+        tf_bucket = "${{ secrets.BUCKET }}"
+        EOF
+
+    - name: Terraform Init
+      id: init
+      working-directory: infra/
+      run: terraform init
+
+    # Generates an execution plan for
+    - name: Terraform Plan
+      id: plan
+      working-directory: infra/
+      if: github.event_name == 'pull_request'
+      run: terraform plan -out terraform.plan
+      continue-on-error: true
+
+    # generate plain output
+    - run: terraform show -no-color terraform.plan > terraform.text
+      working-directory: infra/
+      if: github.event_name == 'pull_request'
+
+    # generate json output
+    - run: terraform show -json terraform.plan > terraform.json
+      working-directory: infra/
+      if: github.event_name == 'pull_request'
+
+    - uses: ahmadnassri/action-terraform-report@v4
+      if: github.event_name == 'pull_request'
+      with:
+        # tell the action the plan outputs
+        terraform-text: infra/terraform.text
+        terraform-json: infra/terraform.json
+        remove-stale-reports: true
+        custom-header: ":robot: Terraform Report"
+
+    - name: Terraform Plan Status
+      if: steps.plan.outcome == 'failure'
+      run: exit 1
+
+    - name: Terraform Apply
+      working-directory: infra/
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      run: terraform apply -auto-approve
