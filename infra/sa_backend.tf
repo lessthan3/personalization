@@ -43,8 +43,8 @@ resource "google_service_account_iam_member" "backend_admin" {
 */
 /*
 #Access to buckets
-resource "google_storage_bucket_iam_member" "backend_sa_yh_deliver_clips_access" {
-  bucket = google_storage_bucket.yh_deliver_clips.name
+resource "google_storage_bucket_iam_member" "backend_sa_access" {
+  bucket = google_storage_bucket.maestro_backend.name
   for_each = toset([
     "roles/storage.objectViewer",
     "roles/storage.objectUser",

@@ -31,7 +31,7 @@ resource "google_project_iam_member" "lili_permissions" {
     "roles/storage.objectUser"
   ])
   role   = each.key
-  member = "user:liliana.valencia@globant.com"
+  member = "user:lmario.mauvecin@globant.com"
 }
 
 #All should be able to use the SA:
@@ -49,7 +49,8 @@ variable "sa_users" {
     "user:federico.acien@globant.com",
     "user:felipe.bozzano@globant.com",
     "user:amilcar.infante@globant.com",
-    "user:manuel.aller@globant.com"
+    "user:manuel.aller@globant.com",
+    "user:mario.mauvecin@globant.com"
   ])
 }
 
