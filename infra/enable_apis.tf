@@ -8,12 +8,12 @@ resource "google_project_service" "project_services" {
     "bigquery.googleapis.com",
     "compute.googleapis.com",
     "containeranalysis.googleapis.com",
+    "datacatalog.googleapis.com",
     "dataflow.googleapis.com",
     "firestore.googleapis.com",
     "logging.googleapis.com",
     "monitoring.googleapis.com",
     "notebooks.googleapis.com",
-    "datacatalog.googleapis.com",
     "visionai.googleapis.com",
   ])
   service                    = each.key
