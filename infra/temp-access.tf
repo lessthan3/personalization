@@ -45,6 +45,13 @@ resource "google_service_account_iam_member" "backend_admin_group" {
   member             = each.key
 }
 
+resource "google_service_account_iam_member" "python_sa_group" {
+  service_account_id = google_service_account.python_sa.name
+  role               = "roles/iam.serviceAccountUser"
+  for_each           = toset(var.sa_users)
+  member             = each.key
+}
+
 variable "sa_users" {
   type        = list(any)
   description = "users able to impersonate the SA"
