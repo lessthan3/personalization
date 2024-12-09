@@ -1,23 +1,23 @@
 #SA creation
-resource "google_service_account" "python_nb_sa" {
+resource "google_service_account" "python_sa" {
   project      = var.project_id
-  account_id   = "python-nb-sa"
-  display_name = "Service Account for python notebooks"
+  account_id   = "python-sa"
+  display_name = "Service Account for python server"
 }
 
 #SA access to himself
-resource "google_service_account_iam_member" "python_nb_sa_self" {
-  service_account_id = google_service_account.python_nb_sa.name
+resource "google_service_account_iam_member" "python_sa_self" {
+  service_account_id = google_service_account.python_sa.name
   for_each = toset([
     "roles/iam.serviceAccountTokenCreator",
     "roles/iam.serviceAccountUser"
   ])
   role   = each.key
-  member = google_service_account.python_nb_sa.member
+  member = google_service_account.python_sa.member
 }
 
 #SA project permissions
-resource "google_project_iam_member" "python_nb_sa_project_access" {
+resource "google_project_iam_member" "python_sa_project_access" {
   project = var.project_id
   for_each = toset([
     "roles/datastore.user",
@@ -26,7 +26,7 @@ resource "google_project_iam_member" "python_nb_sa_project_access" {
     "roles/secretmanager.secretAccessor",
   ])
   role   = each.key
-  member = google_service_account.python_nb_sa.member
+  member = google_service_account.python_sa.member
 }
 
 #access to other SA
@@ -37,11 +37,11 @@ resource "google_service_account_iam_member" "backend_admin" {
     "roles/iam.serviceAccountUser"
   ])
   role   = each.key
-  member = google_service_account.python_nb_sa.member
+  member = google_service_account.python_sa.member
 }
 
 #Access to buckets
-resource "google_storage_bucket_iam_member" "python_nb_sa_access" {
+resource "google_storage_bucket_iam_member" "python_sa_access" {
   bucket = google_storage_bucket.maestro_backend_overlays.name
   for_each = toset([
     "roles/storage.objectViewer",
@@ -49,5 +49,5 @@ resource "google_storage_bucket_iam_member" "python_nb_sa_access" {
     "roles/storage.admin"
   ])
   role   = each.key
-  member = google_service_account.python_nb_sa.member
+  member = google_service_account.python_sa.member
 }
