@@ -21,6 +21,7 @@ resource "google_project_iam_member" "backend_sa_project_access" {
   project = var.project_id
   for_each = toset([
     "roles/datastore.user",
+    "roles/firebase.viewer",
     "roles/storage.objectViewer",
     "roles/storage.objectUser",
     "roles/secretmanager.secretAccessor",

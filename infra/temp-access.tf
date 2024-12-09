@@ -26,14 +26,6 @@ resource "google_project_iam_member" "amilcar_permissions" {
   member   = "user:amilcar.infante@globant.com"
 }
 
-/*#Temporary access during development
-resource "google_project_iam_member" "ilan_permissions" {
-  project  = var.project_id
-  for_each = toset(var.pipol_permissions)
-  role     = each.key
-  member   = "user:ilan.rosenfeld@globant.com"
-}*/
-
 #Temporary access during development
 resource "google_project_iam_member" "mauro_permissions" {
   project = var.project_id
