@@ -20,10 +20,11 @@ resource "google_service_account_iam_member" "python_sa_self" {
 resource "google_project_iam_member" "python_sa_project_access" {
   project = var.project_id
   for_each = toset([
+    "roles/bigquery.dataEditor",
     "roles/datastore.user",
+    "roles/secretmanager.secretAccessor",
     "roles/storage.objectViewer",
     "roles/storage.objectUser",
-    "roles/secretmanager.secretAccessor",
   ])
   role   = each.key
   member = google_service_account.python_sa.member
