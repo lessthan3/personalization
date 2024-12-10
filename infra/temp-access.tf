@@ -18,7 +18,7 @@ resource "google_project_iam_member" "federico_permissions" {
   member   = "user:federico.acien@globant.com"
 }
 
-resource "google_project_iam_mamber" "fede_dba" {
+resource "google_project_iam_member" "fede_dba" {
   project = var.project_id
   role    = "alloydb.admin"
   member  = "user:federico.acien@globant.com"
