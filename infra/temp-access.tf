@@ -20,8 +20,13 @@ resource "google_project_iam_member" "federico_permissions" {
 
 resource "google_project_iam_member" "fede_dba" {
   project = var.project_id
-  role    = "alloydb.admin"
-  member  = "user:federico.acien@globant.com"
+  for_each = toset([
+    "alloydb.admin",
+    "cloudsql.editor",
+    "roles/editor"
+  ])
+  role   = each.key
+  member = "user:federico.acien@globant.com"
 }
 
 #Temporary access during development
